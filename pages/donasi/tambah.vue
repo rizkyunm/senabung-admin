@@ -129,9 +129,7 @@ async function submit() {
       router.push('/donasi')
     }
   } catch (err) {
-    toast.error({
-      message: err?.message,
-    });
+    console.log(err)
   }
 }
 </script>
