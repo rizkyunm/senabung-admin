@@ -84,9 +84,11 @@ onMounted(async () => {
   <div>
     <h2 class="text-2xl font-bold">List Kampanye Donasi</h2>
     <hr class="my-2 border dark:border-gray-700" />
+    <NuxtLink to="/donasi/tambah">
     <TwButton variant="primary" class="my-5">
       Tambah Donasi
     </TwButton>
+    </NuxtLink>
     <TwDatatableClient
       class="!dark:text-gray-200"
       v-model:search="data.search"
