@@ -9,7 +9,7 @@ import {
   TwToggle,
   TwTextarea,
 } from "vue3-tailwind";
-import { useFormExample } from "@/store/formExample";
+import { useFormExample } from "~/store/formExample";
 const formExample = useFormExample();
 </script>
 

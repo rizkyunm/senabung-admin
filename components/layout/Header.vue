@@ -6,11 +6,10 @@ const sidebarStore = useSidebarStore();
 const animationOpenClose = useAnimationOpenClose();
 
 const router = useRouter();
+const { data, signOut } = useAuth();
 
-const logout = () => {
-  router.push("/login");
-};
 </script>
+
 <template>
   <header
     class="md:flex w-full text-gray-200 border-spacing-1 border-t-0 shadow-xl border-[#343434] bg-gray-800 px-2 md:sticky md:top-0 z-20"
@@ -18,7 +17,7 @@ const logout = () => {
     <div
       class="h-14 flex justify-between md:justify-center items-center w-full md:w-52 px-4"
     >
-      <div class="font-bold">NuxiAdmin</div>
+      <div class="font-bold">Senabung Indonesia</div>
       <button
         class="block md:hidden float-right"
         @click="sidebarStore.mobileOpen = !sidebarStore.mobileOpen"
@@ -48,7 +47,7 @@ const logout = () => {
             <button>
               <img
                 class="w-10 h-10 rounded-full border border-[#1d152a7a]"
-                src="/images/profile.jpeg"
+                :src="data.image_url"
                 alt=""
               />
             </button>
@@ -66,7 +65,7 @@ const logout = () => {
               </button>
             </NuxtLink>
             <TwButton
-              @click="logout"
+              @click="signOut({ callbackUrl: '/' })"
               variant="none"
               icon="log-out"
               class="block w-full px-4 py-2 text-sm leading-5 text-gray-700 dark:text-gray-200 text-left hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-800 transition"

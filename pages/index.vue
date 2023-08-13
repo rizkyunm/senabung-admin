@@ -1,142 +1,142 @@
 <script setup lang="ts">
-import { TwFeather } from "vue3-tailwind";
+import {
+  useToast,
+  TwButton,
+  TwErrorMessage,
+  TwForm,
+  TwInput,
+} from "vue3-tailwind";
+import { definePageMeta, useAuth } from '#imports'
+
+definePageMeta({
+  layout: "front",
+  auth: {
+    unauthenticatedOnly: true,
+    navigateAuthenticatedTo: '/dashboard',
+  },
+});
+
+const { signIn } = useAuth()
+const router = useRouter()
+const route = useRoute()
 
 useHead({
-  title: "Dashboard",
+  title: "Login",
 });
+
+const toast = useToast();
+const formLogin = ref();
+const formError = ref(false);
+
+const formData: {
+  [key: string]: any;
+} = reactive({
+  email: "",
+  password: "",
+});
+
+const callback = ref<string>('/dashboard')
+
+if (route.query?.callbackUrl) {
+  callback.value = route.query.callbackUrl
+}
+
+const login = async () => {
+  const validator = formLogin.value.validator();
+  validator.clearErrors();
+  await validator.validate();
+  if (validator.fail()) {
+    toast.error({
+      message: validator.getErrorMessage(),
+    });
+
+    toggleFormError();
+    return;
+  }
+
+  try {
+    await signIn(
+      { email: formData.email, password: formData.password },
+      { callbackUrl: callback?.value }
+    )
+  } catch (err) {
+    toast.error({
+      message: "Email & Password combination missmatch",
+      lifetime: 3000,
+    });
+
+    toggleFormError();
+    return;
+  }
+
+  toast.success({
+    message: "Loggin success, youre being redirected",
+    lifetime: 1000,
+  });
+
+  setTimeout(() => {
+    router.push("/");
+  }, 1000);
+};
+
+const toggleFormError = () => {
+  formError.value = true;
+  setTimeout(() => {
+    formError.value = false;
+  }, 1250);
+};
 </script>
 
 <template>
-  <div>
-    <h1 class="text-3xl font-bold">Dashboard</h1>
-    <hr class="my-2 border dark:border-gray-700" />
-    <div class="grid grid-cols-12 gap-2">
-      <div class="col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-3">
-        <div
-          class="p-2 rounded-lg bg-white dark:bg-gray-800 shadow flex justify-between gap-2 h-full"
-        >
-          <div class="flex flex-col justify-between">
-            <div class="text-gray-500 dark:text-gray-400 font-medium">Today's Money</div>
-            <div class="text-gray-700 dark:text-gray-200 font-bold text-lg">
-              $53,000
-              <span class="text-sm text-yellow-600">+55%</span>
-            </div>
-          </div>
-          <div
-            class="bg-gradient-to-tl from-gray-600 to-gray-900 rounded-lg text-white p-2 flex items-center justify-center px-4"
-          >
-            <TwFeather type="dollar-sign"></TwFeather>
-          </div>
-        </div>
+  <div class="text-white flex justify-center pt-40">
+    <div
+      class="text-gray-800 rounded-t-lg w-96 shadow-lg p-1 bg-gradient-to-b from-indigo-400 h-20"
+      :class="{
+        'tw-shake': formError,
+      }"
+    >
+      <div
+        class="header bg-white dark:bg-gray-900 border-b dark:border-gray-700 text-indigo-900 dark:text-gray-200 p-4 rounded-t"
+      >
+        <h1 class="text-2xl font-bold text-center">Welcome</h1>
       </div>
-      <div class="col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-3">
-        <div
-          class="p-2 rounded-lg bg-white dark:bg-gray-800 shadow flex justify-between gap-2 h-full"
-        >
-          <div class="flex flex-col justify-between">
-            <div class="text-gray-500 dark:text-gray-400 font-medium">Today's Users</div>
-            <div class="text-gray-700 dark:text-gray-200 font-bold text-lg">
-              2,300
-              <span class="text-sm text-yellow-600">+3%</span>
-            </div>
-          </div>
-          <div
-            class="bg-gradient-to-tl from-gray-600 to-gray-900 rounded-lg text-white p-2 flex items-center justify-center px-4"
-          >
-            <TwFeather type="aperture"></TwFeather>
-          </div>
-        </div>
-      </div>
-      <div class="col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-3">
-        <div
-          class="p-2 rounded-lg bg-white dark:bg-gray-800 shadow flex justify-between gap-2 h-full"
-        >
-          <div class="flex flex-col justify-between">
-            <div class="text-gray-500 dark:text-gray-400 font-medium">New Clients</div>
-            <div class="text-gray-700 dark:text-gray-200 font-bold text-lg">
-              +3,462
-              <span class="text-sm text-red-600">+2%</span>
-            </div>
-          </div>
-          <div
-            class="bg-gradient-to-tl from-gray-600 to-gray-900 rounded-lg text-white p-2 flex items-center justify-center px-4"
-          >
-            <TwFeather type="users"></TwFeather>
-          </div>
-        </div>
-      </div>
-      <div class="col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-3">
-        <div
-          class="p-2 rounded-lg bg-white dark:bg-gray-800 shadow flex justify-between gap-2 h-full"
-        >
-          <div class="flex flex-col justify-between">
-            <div class="text-gray-500 dark:text-gray-400 font-medium">Sales</div>
-            <div class="text-gray-700 dark:text-gray-200 font-bold text-lg">
-              $103,430
-              <span class="text-sm text-yellow-600">+5%</span>
-            </div>
-          </div>
-          <div
-            class="bg-gradient-to-tl from-gray-600 to-gray-900 rounded-lg text-white p-2 flex items-center justify-center px-4"
-          >
-            <TwFeather type="shopping-cart"></TwFeather>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="grid grid-cols-12 gap-2 mt-2">
-      <div class="col-span-12 md:col-span-7">
-        <div class="flex gap-2 rounded-lg p-4 shadow bg-white dark:bg-gray-800">
-          <div class="flex flex-col justify-between">
-            <div class="">
-              <div class="text-gray-500 dark:text-gray-400 font-medium">Built by developers</div>
-              <div class="text-gray-700 dark:text-gray-200 font-bold text-xl">
-                Nuxt 3 Admin Dashboard
-              </div>
-              <div class="">
-                From colors, cards, typography to complex elements, you will
-                find the full documentation.
-              </div>
-            </div>
-            <div class="">Read More ...</div>
-          </div>
-          <div
-            class="rounded-lg bg-gradient-to-tl from-gray-50 to-gray-200 dark:from-gray-700 flex items-center justify-center w-52 h-52"
-          >
-            <img
-              class="w-32 h-32 rounded object-cover"
-              src="/images/rocket.png"
-              alt=""
+      <TwForm
+        ref="formLogin"
+        name="login"
+        :rules="{
+          email: ['required', 'email'],
+          password: ['required'],
+        }"
+        @submit="login"
+        class="body bg-white dark:bg-gray-900 p-4 rounded-b-lg"
+      >
+        <div class="grid grid-cols-12 gap-2">
+          <div class="col-span-12">
+            <TwInput
+              class="dark:text-gray-200"
+              v-model="formData.email"
+              name="email"
+              label="Email"
             />
+            <TwErrorMessage name="email"></TwErrorMessage>
           </div>
-        </div>
-      </div>
-      <div class="col-span-12 md:col-span-5">
-        <div class="flex gap-2 bg-white dark:bg-gray-800 rounded-lg p-4 shadow">
-          <div class="flex flex-col justify-between">
-            <div class="">
-              <div class="text-gray-500 dark:text-gray-400 font-medium">Built by developers</div>
-              <div class="text-gray-700 dark:text-gray-200 font-bold text-xl">
-                Nuxt 3 Admin Dashboard
-              </div>
-              <div class="">
-                From colors, cards, typography to complex elements, you will
-                find the full documentation.
-              </div>
-            </div>
-            <div class="">Read More ...</div>
-          </div>
-          <div
-            class="rounded-lg bg-gradient-to-tl from-gray-50 to-gray-200 dark:from-gray-700 flex items-center justify-center w-52 h-52"
-          >
-            <img
-              class="w-32 h-32 rounded object-cover"
-              src="/images/rocket.png"
-              alt=""
+          <div class="col-span-12">
+            <TwInput
+              class="dark:text-gray-200"
+              v-model="formData.password"
+              name="password"
+              label="Password"
+              type="password"
             />
+            <TwErrorMessage name="password"></TwErrorMessage>
+          </div>
+          <div class="col-span-12">
+            <TwButton class="w-full text-center">
+              Login
+            </TwButton>
           </div>
         </div>
-      </div>
+      </TwForm>
     </div>
   </div>
 </template>

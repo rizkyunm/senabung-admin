@@ -29,19 +29,6 @@ const cookieDark = useCookie('dark-mode')
           ></div>
         </div>
       </div>
-      <div
-        class="text-center flex items-center gap-1 justify-center text-gray-200"
-      >
-        Developed with
-        <TwFeather class="text-red-500" type="heart" /> By
-        <a
-          class="text-blue-300"
-          href="https://github.com/WailanTirajoh"
-          target="_blank"
-        >
-          Wailan
-        </a>
-      </div>
     </div>
   </div>
 </template>
