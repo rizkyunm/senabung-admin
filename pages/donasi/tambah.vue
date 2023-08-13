@@ -121,8 +121,7 @@ async function submit() {
     if (res?.id) {
       let formData = new FormData()
       formData.append('file', campaign_image.value[0])
-      console.log(formData)
-      await $api.campaign.upload(token.value, '5', formData);
+      await $api.campaign.upload(token.value, res.id, formData);
 
       toast.success({
         message: "Donasi berhasil ditambahkan"
