@@ -1,0 +1,1 @@
+import{f as o,u as t,o as s,c as a,a as e}from"./entry.69c0241d.js";const n=e("h1",{class:"text-3xl font-bold"}," Inbox ",-1),r=e("hr",{class:"my-2 border dark:border-gray-700"},null,-1),c=[n,r],u=o({__name:"index",setup(_){return t({title:"Inbox"}),(d,l)=>(s(),a("div",null,c))}});export{u as default};

@@ -1,0 +1,4 @@
+const _virtual__headStatic = {"headTags":"<meta charset=\"utf-8\">\n<title>Nuxt PWA</title>\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<meta name=\"mobile-web-app-capable\" content=\"yes\">\n<meta name=\"apple-mobile-web-app-title\" content=\"Nuxt PWA\">\n<meta name=\"theme-color\" content=\"#000000\">\n<meta property=\"og:type\" content=\"website\">\n<meta property=\"og:title\" content=\"Nuxt PWA\">\n<meta property=\"og:site_name\" content=\"Nuxt PWA\">\n<meta name=\"twitter:card\" content=\"summary\">\n<link rel=\"icon\" href=\"/_nuxt/icons/64x64.8be4fc28.png\" data-h-2c9d455=\"\">\n<link rel=\"apple-touch-icon\" href=\"/_nuxt/icons/512x512.maskable.8be4fc28.png\" sizes=\"512x512\" data-h-bc1de16=\"\">\n<link rel=\"manifest\" href=\"/manifest.json\">","bodyTags":"","bodyTagsOpen":"","htmlAttrs":" lang=\"en\"","bodyAttrs":""};
+
+export { _virtual__headStatic as default };
+//# sourceMappingURL=_virtual_head-static.mjs.map
